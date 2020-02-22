@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sistem Pendeteksi</string>
+
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed elit tincidunt, mattis quam a, ultricies tellus.
+        Donec interdum, enim eleifend euismod pretium, augue nisl fringilla sapien, ut congue diam ante tincidunt mauris. Maecenas cursus
+        justo ut massa congue viverra. Mauris facilisis erat dolor, non venenatis elit rutrum non. Duis id feugiat leo. Nam sodales sed lectus
+        non sollicitudin. Nunc ut tortor non ante semper sagittis.</string>
+</resources>
