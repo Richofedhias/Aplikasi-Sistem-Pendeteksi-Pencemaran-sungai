@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "874250318977",
+    "firebase_url": "https://sistem-pendeteksi.firebaseio.com",
+    "project_id": "sistem-pendeteksi",
+    "storage_bucket": "sistem-pendeteksi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874250318977:android:4badbe764fd3e353800980",
+        "android_client_info": {
+          "package_name": "com.example.sistempendeteksi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874250318977-1li3iur3crmc6lu8kk277f5r0poqabhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sistempendeteksi",
+            "certificate_hash": "e37d829e52c291438cc9bfbbd39d1a4e4c27d960"
+          }
+        },
+        {
+          "client_id": "874250318977-38d63gvrhue00a7ctq46he1q57tjdisu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvb8A1cYK5qDGQ4cg9mncU0GD9-t4kjAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874250318977-38d63gvrhue00a7ctq46he1q57tjdisu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
