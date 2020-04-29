@@ -80,16 +80,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, GrafikKekeruhanActivity.class);
         startActivity(intent);
     }
+//    Bentar
 
     private void ambilData(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("sensor").child("dht");
-        reference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("sensor");
+        Query lastQuery = reference.child("dht").orderByKey().limitToLast(1);
+        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()== true){
-                    Toast.makeText(MainActivity.this, "Ada data", Toast.LENGTH_SHORT).show();
+                if (dataSnapshot.exists() == true){
+                    Log.d("suhu",dataSnapshot.getValue().toString());
                 }else{
-                    Toast.makeText(MainActivity.this, "Tidak ADa data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Tidak ada data", Toast.LENGTH_SHORT).show();
                 }
             }
 
