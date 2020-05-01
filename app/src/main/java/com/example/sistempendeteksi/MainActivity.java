@@ -4,8 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,10 +37,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn_history = findViewById(R.id.btn_history);
-        suhu = findViewById(R.id.tV_suhu);
-        kekeruhan = findViewById(R.id.tV_keruh);
-        pH = findViewById(R.id.tV_pH);
+        suhu = findViewById(R.id.tV_nilaiSuhu);
+        kekeruhan = findViewById(R.id.tV_nilaiKeruh);
+        pH = findViewById(R.id.tV_nilaipH);
         ambilData();
+        createNotif();
+
+        Intent intent = new Intent(MainActivity.this,ReminderBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,0,intent,0);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        long tenSecond = 1000 * 10;
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,tenSecond,pendingIntent);
 
 //        Query lastQuery = reference.child("dht").orderByKey().limitToLast(1);
 //
@@ -80,25 +95,44 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, GrafikKekeruhanActivity.class);
         startActivity(intent);
     }
-//    Bentar
 
     private void ambilData(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("sensor");
-        Query lastQuery = reference.child("dht").orderByKey().limitToLast(1);
-        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = reference.child("dht").orderByKey().limitToLast(1);
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists() == true){
-                    Log.d("suhu",dataSnapshot.getValue().toString());
-                }else{
-                    Toast.makeText(MainActivity.this, "Tidak ada data", Toast.LENGTH_SHORT).show();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String nameSuhu = "" + ds.child("temperature").getValue();
+                    String namepH = "" + ds.child("pH").getValue();
+                    String nameTurbidity = "" + ds.child("turbidity").getValue();
+                    Log.d("suhu",nameSuhu);
+                    suhu.setText(nameSuhu);
+                    pH.setText(namepH);
+                    kekeruhan.setText(nameTurbidity);
                 }
-            }
+                }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+
+    }
+
+    private void createNotif(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name ="Poltec";
+            String description = "Deskripsi";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notif",name,importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
