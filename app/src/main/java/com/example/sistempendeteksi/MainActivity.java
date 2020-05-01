@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             CharSequence name ="Poltec";
             String description = "Deskripsi";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel("notif",name,importance);
             channel.setDescription(description);
 
