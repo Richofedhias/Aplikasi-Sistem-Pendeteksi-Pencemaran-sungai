@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    implementation 'com.jjoe64:graphview:4.2.2'
 
     //firebase
     implementation 'com.google.firebase:firebase-database:19.3.0'

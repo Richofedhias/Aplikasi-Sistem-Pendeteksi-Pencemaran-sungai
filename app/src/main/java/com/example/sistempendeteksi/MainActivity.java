@@ -82,18 +82,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GraphSuhu(View view) {
-        Intent intent = new Intent(MainActivity.this, GrafikSuhuActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, GrafikSuhuActivity.class);
+//        startActivity(intent);
     }
 
     public void GraphpH(View view) {
-        Intent intent = new Intent(MainActivity.this, GrafikpHActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, GrafikpHActivity.class);
+//        startActivity(intent);
     }
 
     public void GraphKekeruhan(View view) {
-        Intent intent = new Intent(MainActivity.this, GrafikKekeruhanActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, GrafikKekeruhanActivity.class);
+//        startActivity(intent);
     }
 
     private void ambilData(){
