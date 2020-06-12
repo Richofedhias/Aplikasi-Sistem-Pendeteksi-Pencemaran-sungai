@@ -45,6 +45,7 @@ public class HistoryActivity extends AppCompatActivity {
     HistoryAdapter adapter;
     ArrayList<HistoryList> data = new ArrayList<>();
     ProgressDialog pg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

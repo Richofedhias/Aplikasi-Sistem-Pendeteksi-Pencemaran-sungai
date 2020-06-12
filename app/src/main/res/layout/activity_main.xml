@@ -59,7 +59,6 @@
             app:cardCornerRadius="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:onClick="GraphSuhu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -99,7 +98,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/amiko"
-                    android:text="27\u2103"
+                    android:text="27"
                     android:textColor="#FFFFFF"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -121,7 +120,6 @@
             app:cardCornerRadius="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:onClick="GraphpH"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -182,7 +180,6 @@
             app:cardCornerRadius="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:onClick="GraphKekeruhan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -221,7 +218,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/amiko"
-                    android:text="Tidak Keruh"
+                    android:text="500"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -242,6 +239,7 @@
             app:cardCornerRadius="8dp">
 
             <LinearLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_suhu"
