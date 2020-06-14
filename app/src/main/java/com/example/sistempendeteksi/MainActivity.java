@@ -177,23 +177,23 @@ public class MainActivity extends AppCompatActivity {
                 Double pHH = Double.parseDouble(namepH);
                 Double keruh = Double.parseDouble(nameTurbidity);
                 if (Suhu <= 30 && Suhu >= 25.01  && pHH <= 7 && pHH >= 5.01 && keruh <= 500 && keruh >= 300.01) {
-                    index.setText("Tidak Tercemar");
+                    index.setText("Aman");
                     layout.setBackgroundResource(R.drawable.bg_tidak_tercemar);
                     keterangan.setText("Air dapat digunakan untuk air minum, menyiram tanaman dan mengairi sawah");
                 } else if ((Suhu <= 30 && Suhu >= 25.01)  && (pHH <= 10 && pHH >= 7.01) && (keruh <= 500 && keruh >= 300.01)){
-                    index.setText("Hampir Tidak Tercemar");
+                    index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
                     keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
                 } else if ((Suhu >= 30.01) && (pHH <= 7 && pHH >= 5.01) && (keruh <= 500 && keruh >= 300.01)){
-                    index.setText("Hampir Tidak Tercemar");
+                    index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
                     keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
                 } else if ((Suhu <= 30 && Suhu >= 25.01) && (pHH <= 7 && pHH >= 5.01) && (keruh <= 1000 && keruh >= 500.01)){
-                    index.setText("Hampir Tidak Tercemar");
+                    index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
                     keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
                 } else if ((Suhu >= 30.01) && (pHH >= 10) && (keruh >= 1000.01)){
-                    index.setText("Sudah Mulai Tercemar");
+                    index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
                     keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
                 } else {
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         dialogView = inflater.inflate(R.layout.form_data, null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
-        dialog.setIcon(R.mipmap.ic_launcher);
+        dialog.setIcon(R.drawable.ic_alarm);
         dialog.setTitle("Atur Notifikasi");
 
         txt_nama    =  dialogView.findViewById(R.id.txt_nama);

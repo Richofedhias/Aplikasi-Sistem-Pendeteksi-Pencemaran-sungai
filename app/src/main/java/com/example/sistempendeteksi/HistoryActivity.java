@@ -53,6 +53,8 @@ public class HistoryActivity extends AppCompatActivity {
         rv_list = findViewById(R.id.rv_history);
         rv_list.setHasFixedSize(true);
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
+        ((LinearLayoutManager) lm).setReverseLayout(true);
+        ((LinearLayoutManager) lm).setStackFromEnd(true);
         rv_list.setLayoutManager(lm);
         RecyclerView.ItemDecoration divider = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         rv_list.addItemDecoration(divider);
