@@ -1,0 +1,164 @@
+#include <OneWire.h>                                              //library untuk pembacaan sensor ds18b20
+#include <DallasTemperature.h>
+#include <WiFi.h>                                                // esp32 library
+#include <IOXhop_FirebaseESP32.h>                                // firebase library esp32
+#include "DFRobot_ESP_PH.h"                                     // library ph esp32
+#include <EEPROM.h>
+#include "RTClib.h"
+#include <Wire.h> 
+#include <math.h>
+
+DFRobot_ESP_PH ph;
+#define ESPADC 4096.0   //the esp Analog Digital Convertion value
+#define ESPVOLTAGE 3300 //the esp voltage supply value
+//float voltage, phValue, temperature = 25;
+
+RTC_DS3231 rtc;
+
+#define FIREBASE_HOST "project-rico2.firebaseio.com"
+#define FIREBASE_AUTH "kwgmCv0TXDTs5lrOa2sM3Y1m53bYLv7uMdHnpCI3"
+#define WIFI_SSID "Akukamu"
+#define WIFI_PASSWORD "PAbossku"
+
+#define ONE_WIRE_BUS 4 //gpio suhu
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensorSuhu(&oneWire);
+#define PH_PIN 32    //gpio ph meter
+#define TB_PIN 34
+
+float tegangan;
+int suhuSekarang;
+float nilaiph;
+int lp = 0;
+int lp_time = 20;
+//char namabulan[12][12] = {"Des", "Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agus", "Sep", "Okt", "Nov"};
+char daysOfTheWeek[7][12] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
+float waktu, tahun, bulan, tgl, hari;
+
+void setup()
+{
+  Serial.begin(115200);  //serial monitor
+  pinMode(4, INPUT_PULLUP); // PIN GPIO suhu
+  sensorSuhu.begin(); //mulai untuk pembacaan sensor ds18b20
+  pinMode(32, INPUT); // Pin GPIO PH
+  EEPROM.begin(32);
+  ph.begin(); //mulai untuk pembacaan sensor ph meter
+  pinMode(34, INPUT); // pin GPIO turbidity
+  //analogReadResolution(10);
+  //analogSetWidth(10);
+  
+
+  #ifndef ESP8266
+  while (!Serial);
+  #endif
+  if (! rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    while (1);
+  }
+  if (rtc.lostPower()) {
+    Serial.println("RTC lost power, lets set the time!");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+  
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("connecting");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+    lp++;
+    if (lp >= 20) break;
+  }
+  Serial.println();
+  Serial.print("connected: ");
+  Serial.println(WiFi.localIP());
+
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+}
+
+void loop()
+{
+  int sensorValue = analogRead(TB_PIN);
+  float voltage = sensorValue * (5.0 / 4096.0);
+  int turbidity = -1120.4 * voltage * voltage + 5742.3 * voltage - 4352.9; //in NTU
+if(voltage > 4.2){
+  turbidity = 0;
+  Serial.print ("Tegangan turbidity: ");
+  Serial.println (voltage);
+  Serial.print ("NTU:");
+  Serial.println (turbidity);
+  delay(1500);
+}
+else {
+  Serial.print ("Tegangan Turbidity: ");
+  Serial.println (voltage);
+  Serial.print ("NTU:");
+  Serial.println (turbidity);
+  delay(1500);
+}
+  //================================================================================== suhu + PH
+  sensorSuhu.requestTemperatures();
+  static unsigned long timepoint = millis();
+  if (millis() - timepoint > 1000U) {            //time interval: 1s
+    timepoint = millis();
+    
+    tegangan = analogRead(PH_PIN) / ESPADC * ESPVOLTAGE; //mengubah tegangan analog menjadi digital dan menjadi tegangan
+    Serial.print("tegangan ph: ");
+    Serial.println(tegangan, 2);
+    
+    suhuSekarang = sensorSuhu.getTempCByIndex(00);
+    nilaiph = ph.readPH(tegangan, suhuSekarang); //konversi tegangan menjadi ph meter dengan kompensasi suhu
+    float nilaiph2 = roundf(nilaiph * 100)/100;
+    float suhuSekarang2 = roundf(suhuSekarang * 100)/100;
+    Serial.print("Celsius temperature: ");
+    Serial.print(suhuSekarang, 1); //nilai pembacaan suhu
+    Serial.println("^C");
+    Serial.print("PH = ");
+    Serial.println(nilaiph, 2);
+    delay(2000);
+    
+    
+
+    DateTime now = rtc.now();
+    tahun = now.year();
+    bulan = now.month();
+    tgl = now.day();
+     
+    Serial.print(now.year(), DEC);
+    Serial.print('/');
+    Serial.print(now.month(), DEC);
+    Serial.print('/');
+    Serial.print(now.day(), DEC);
+    Serial.print(" (");
+    Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
+    Serial.print(") ");
+    Serial.print(now.hour(), DEC);
+    Serial.print(':');
+    Serial.print(now.minute(), DEC);
+    Serial.print(':');
+    Serial.print(now.second(), DEC);
+    Serial.println();
+    delay(3000);
+
+    lp++;
+    if (lp >= lp_time) {
+      lp = 0;
+
+      StaticJsonBuffer<200> jsonBuffer;
+      JsonObject& root = jsonBuffer.createObject();
+      root["temperature"] = suhuSekarang2;
+      root["turbidity"] = turbidity;
+      root["pH"] = nilaiph2;
+      root["tahun"] = tahun;
+      root["bulan"] = bulan;
+      root["tanggal"]= tgl;
+ 
+
+      // append a new value to /logDHT
+      String name = Firebase.push("/sensor/dht", root);
+    }
+    ph.calibration(tegangan, suhuSekarang);
+  }
+  
+
+}
