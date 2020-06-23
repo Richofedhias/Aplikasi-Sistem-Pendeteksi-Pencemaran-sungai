@@ -117,4 +117,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_suhu"
+        android:gravity="center"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/amiko"
+            android:padding="8dp"
+            android:text="Tidak Tercemar"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="18dp" />
+    </LinearLayout>
+
 </LinearLayout>

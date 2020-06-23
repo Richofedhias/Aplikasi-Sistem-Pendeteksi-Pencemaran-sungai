@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     String nameSuhu, namepH, nameTurbidity;
     LinearLayout layout;
     private Switch setingNotif;
-    private TimePickerDialog timePickerDialog;
     TextView txt_nama;
     Button waktu;
     AlertDialog.Builder dialog;
@@ -56,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
     Calendar calSet = (Calendar) myCalendar.clone();
     String nama;
     int hour, minute, hour1, minute1;
-    private Double dPh, dKekeruhan;
-    private int intSuhu;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,35 +71,12 @@ public class MainActivity extends AppCompatActivity {
         layout = findViewById(R.id.layout);
         ambilData();
 
-
         Intent intent = new Intent(MainActivity.this,ReminderBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,0,intent,0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
         long tenSecond = 1000 * 10;
-
         alarmManager.set(AlarmManager.RTC_WAKEUP,tenSecond,pendingIntent);
-
-//        Query lastQuery = reference.child("dht").orderByKey().limitToLast(1);
-//
-//        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()){
-//
-//                    Log.d("suhu",dataSnapshot.child("temperature").getValue().toString());
-//                    Toast.makeText(MainActivity.this, "NJING", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(MainActivity.this, "NYET", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         btn_history.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,24 +93,26 @@ public class MainActivity extends AppCompatActivity {
                 if (b){
                     //keluar Dialog Jam
                     DialogForm();
-
-
                 }
                 else{
-
                 }
             }
         });
     }
 
+    public void GraphSuhu(View view) {
+        Intent intent = new Intent(MainActivity.this, GrafikSuhuActivity.class);
+        startActivity(intent);
+    }
+
     public void GraphpH(View view) {
-//        Intent intent = new Intent(MainActivity.this, GrafikpHActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, GrafikpHActivity.class);
+        startActivity(intent);
     }
 
     public void GraphKekeruhan(View view) {
-//        Intent intent = new Intent(MainActivity.this, GrafikKekeruhanActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, GrafikKekeruhanActivity.class);
+        startActivity(intent);
     }
 
     private void ambilData(){
@@ -152,54 +127,33 @@ public class MainActivity extends AppCompatActivity {
                     nameTurbidity = "" + ds.child("turbidity").getValue();
                     Log.d("suhu",nameSuhu);
                     suhu.setText(nameSuhu + "\u2103");
-                    pH.setText(namepH);
-                    kekeruhan.setText(nameTurbidity);
-
-
-
-//                    try{
-//                        int hitungSuhu = (int) ds.child("temperature").getValue();
-//                        int hitungpH = (int) ds.child("pH").getValue();
-//                        int hitungTurbidity = (int) ds.child("turbidity").getValue();
-//
-//                        if(hitungSuhu > 20 && hitungpH > 5 && hitungTurbidity > 0 ){
-//                            kategori.setText("Bersih");
-//                            penjelasan.setText("Testing");
-//                        }
-//                    } catch(NumberFormatException ex){ // handle your exception
-//                        Toast.makeText(MainActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
-//                    }
-
-
+                    pH.setText(namepH + " pH");
+                    kekeruhan.setText(nameTurbidity + " NTU");
                 }
 
                 Double Suhu = Double.parseDouble(nameSuhu);
                 Double pHH = Double.parseDouble(namepH);
                 Double keruh = Double.parseDouble(nameTurbidity);
-                if (Suhu <= 30 && Suhu >= 25.01  && pHH <= 7 && pHH >= 5.01 && keruh <= 500 && keruh >= 300.01) {
+                if (Suhu <= 32 && Suhu >= 25.01  && pHH <= 8 && pHH >= 5.01 && keruh <= 500 && keruh >= 0) {
                     index.setText("Aman");
                     layout.setBackgroundResource(R.drawable.bg_tidak_tercemar);
-                    keterangan.setText("Air dapat digunakan untuk air minum, menyiram tanaman dan mengairi sawah");
-                } else if ((Suhu <= 30 && Suhu >= 25.01)  && (pHH <= 10 && pHH >= 7.01) && (keruh <= 500 && keruh >= 300.01)){
+                    keterangan.setText("Air dapat digunakan untuk mengairi sawah");
+                } else if ((Suhu <= 32 && Suhu >= 25.01)  && (pHH <= 10 && pHH >= 8.01) && (keruh <= 500 && keruh >= 0)){
                     index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
-                    keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
-                } else if ((Suhu >= 30.01) && (pHH <= 7 && pHH >= 5.01) && (keruh <= 500 && keruh >= 300.01)){
+                    keterangan.setText(R.string.lorem);
+                } else if ((Suhu >= 32.01) && (pHH <= 8 && pHH >= 5.01) && (keruh <= 500 && keruh >= 0)){
                     index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
-                    keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
-                } else if ((Suhu <= 30 && Suhu >= 25.01) && (pHH <= 7 && pHH >= 5.01) && (keruh <= 1000 && keruh >= 500.01)){
+                    keterangan.setText(R.string.lorem);
+                } else if ((Suhu <= 32 && Suhu >= 25.01) && (pHH <= 8 && pHH >= 5.01) && (keruh <= 1000 && keruh >= 500.01)){
                     index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
-                    keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
-                } else if ((Suhu >= 30.01) && (pHH >= 10) && (keruh >= 1000.01)){
-                    index.setText("Hati-hati");
-                    layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
-                    keterangan.setText("Air dapat digunakan untuk menyiram tanaman dan mengairi sawah");
-                } else {
+                    keterangan.setText(R.string.lorem);
+                } else if ((Suhu >= 35.01) && (pHH >= 10.01) && (keruh >= 1000.01)){
                     index.setText("Tercemar");
                     layout.setBackgroundResource(R.drawable.bg_tercemar);
-                    keterangan.setText("Air tidak dapat digunakan untuk air minum, menyiram tanaman dan mengairi sawah");
+                    keterangan.setText(R.string.tercemar);
                 }
             }
 
@@ -208,25 +162,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-
-
-
     private void show(){
-
         hour = myCalendar.get(Calendar.HOUR_OF_DAY);
         minute = myCalendar.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
-
         mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @TargetApi(Build.VERSION_CODES.N)
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                //ehour.setText(selectedHour + ":" + selectedMinute);
-
                 hour1 = selectedHour;
                 minute1 = selectedMinute;
 
@@ -234,18 +179,13 @@ public class MainActivity extends AppCompatActivity {
                 calSet.set(Calendar.MINUTE, minute1);
                 txt_nama.setText(selectedHour +":"+ selectedMinute);
 
-
-
                 if(calSet.compareTo(myCalendar) <= 0){
-                    //Today Set time passed, count to tomorrow
                     calSet.add(Calendar.DATE, 1);
                 }
             }
-        }, hour, minute, true);//false bcz not 24 hour time format
+        }, hour, minute, true);
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
-
-
     }
 
     private void DialogForm() {
@@ -256,25 +196,19 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.setIcon(R.drawable.ic_alarm);
         dialog.setTitle("Atur Notifikasi");
-
-        txt_nama    =  dialogView.findViewById(R.id.txt_nama);
+        txt_nama = dialogView.findViewById(R.id.txt_nama);
         waktu = dialogView.findViewById(R.id.btn_wkt);
-
         waktu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 show();
             }
         });
-
-
-
-
         dialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                 nama    = txt_nama.getText().toString();
+                 nama = txt_nama.getText().toString();
 
                 Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
@@ -284,11 +218,9 @@ public class MainActivity extends AppCompatActivity {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), pendingIntent);
                 //Toast.makeText(this, "Alarm set in " + second + " mili seconds", Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Alarm set at " + hour1 + ":" + minute1 + " hours", Toast.LENGTH_LONG).show();
-
                 dialog.dismiss();
             }
         });
-
         dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
 
             @Override
@@ -296,11 +228,6 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
-
-
-
-
 }

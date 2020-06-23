@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Sistem Pendeteksi</string>
 
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed elit tincidunt, mattis quam a, ultricies tellus.
-        Donec interdum, enim eleifend euismod pretium, augue nisl fringilla sapien, ut congue diam ante tincidunt mauris. Maecenas cursus
-        justo ut massa congue viverra. Mauris facilisis erat dolor, non venenatis elit rutrum non. Duis id feugiat leo. Nam sodales sed lectus
-        non sollicitudin. Nunc ut tortor non ante semper sagittis.</string>
+    <string name="lorem">"Penanggulangan Pencemaran Air dengan cara seperti berikut :\n1. Kesadaran diri untuk tidak membuang sampah di sungai, tidak membuang air limbah ke sungai\n2. Konservasi tanah dan air untuk memperbaiki fungsinya kembali.\n\nTerdapat juga penanggulangan secara non-teknis yaitu :\n Suatu usaha untuk mengurangi pencemaran lingkungan dengan cara menciptakan peraturan perundangan yang dapat merencanakan, mengatur dan mengawasi segala macam bentuk kegiatan industri dan teknologi sehingga tidak terjadi pencemaran. Peraturan perundangan ini hendaknya dapat memberikan gambaran secara jelas tentang kegiatan industri yang akan dilaksanakan</string>
+
+    <string name="tercemar">Tata-tata cara pengaliran air limbah sebagai air irigasi sawah antara lain adalah sebagai berikut: \n\n1. Membuat dinding yang terbuat dari anyaman bambu untuk penyaring sampah di saluran pipa mesin pompa supaya sampah yang ada disungai tersebut tidak ikut tersedot pompa\n\n2. Setelah itu membuat saluran tali air kecil, membuat saluran dari pipa yang menhubungkan kelahan-lahan petani, bendungan untuk mengatur air dan membuat saluran pembuangan air kesungai.\n\n3. Kemudian setelah dinding anyaman bambu untuk penyaring sampahnya sudah dipasang dan dibuat saluran tali air kecil lalu disedot dengan menggunakan mesin pompa dan airnya sampai kelahan-lahan petani.</string>
 </resources>

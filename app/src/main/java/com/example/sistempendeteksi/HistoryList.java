@@ -1,9 +1,17 @@
 package com.example.sistempendeteksi;
 
 public class HistoryList {
-    String hari, bulan, tahun, suhu, kekruhan, ph;
+    String hari, bulan, tahun, suhu, kekruhan, ph, index;
 
     public HistoryList() {
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public String getHari() {
