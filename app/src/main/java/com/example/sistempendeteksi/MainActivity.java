@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     index.setText("Hati-hati");
                     layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
                     keterangan.setText(R.string.lorem);
-                } else if ((Suhu >= 35.01) && (pHH >= 10.01) && (keruh >= 1000.01)){
+                } else {
                     index.setText("Tercemar");
                     layout.setBackgroundResource(R.drawable.bg_tercemar);
                     keterangan.setText(R.string.tercemar);

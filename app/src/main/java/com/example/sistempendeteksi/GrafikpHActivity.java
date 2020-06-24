@@ -20,11 +20,17 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class GrafikpHActivity extends AppCompatActivity {
 
-    private LineChartView LCpHHarian, LCpHMingguan, LCpHBulanan;
+    private LineChartView LCpHHarian, LCpHTahunan, LCpHBulanan;
     private LineChartData data;
-    private Button Harian, Mingguan, Bulanan;
-    String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
-    int[] yAxisData = {5, 2, 5, 3, 1, 6, 5, 4, 4, 10, 9, 8};
+    private Button Harian, Tahunan, Bulanan;
+    String[] axisDataBulan = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
+    int[] yAxisDataBulan = {5, 2, 5, 3, 5, 6, 5, 4, 4, 10, 9, 8};
+
+    String[] axisDataTahun = {"2015", "2016", "2017", "2018", "2019", "2020"};
+    int[] yAxisDataTahun = {5, 5, 7, 10, 7, 8};
+
+    String[] axisDataHari = {"Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"};
+    int[] yAxisDataHari = {8, 5, 7, 5, 4, 9, 8};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +44,12 @@ public class GrafikpHActivity extends AppCompatActivity {
 
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#055797"));
 
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        for (int i = 0; i < axisDataHari.length; i++) {
+            axisValues.add(i, new AxisValue(i).setLabel(axisDataHari[i]));
         }
 
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        for (int i = 0; i < yAxisDataHari.length; i++) {
+            yAxisValues.add(new PointValue(i, yAxisDataHari[i]));
         }
 
         List<Line> lines = new ArrayList<Line>();
@@ -67,31 +73,31 @@ public class GrafikpHActivity extends AppCompatActivity {
 
         LCpHHarian.setLineChartData(data);
         Viewport viewport = new Viewport(LCpHHarian.getMaximumViewport());
-        viewport.top = 20;
+        viewport.top = 15;
         LCpHHarian.setMaximumViewport(viewport);
         LCpHHarian.setCurrentViewport(viewport);
 
-        LCpHMingguan = findViewById(R.id.LC_pHMingguan);
+        LCpHTahunan = findViewById(R.id.LC_pHTahun);
         LCpHBulanan = findViewById(R.id.LC_pHBulanan);
         Harian = findViewById(R.id.btn_pHHarian);
-        Mingguan = findViewById(R.id.btn_pHMingguan);
+        Tahunan = findViewById(R.id.btn_pHTahun);
         Bulanan = findViewById(R.id.btn_pHBulanan);
 
         Harian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LCpHHarian.setVisibility(View.VISIBLE);
-                LCpHMingguan.setVisibility(View.GONE);
+                LCpHTahunan.setVisibility(View.GONE);
                 LCpHBulanan.setVisibility(View.GONE);
             }
         });
 
-        Mingguan.setOnClickListener(new View.OnClickListener() {
+        Tahunan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GrafikMingguan();
+                GrafikTahunan();
                 LCpHHarian.setVisibility(View.GONE);
-                LCpHMingguan.setVisibility(View.VISIBLE);
+                LCpHTahunan.setVisibility(View.VISIBLE);
                 LCpHBulanan.setVisibility(View.GONE);
             }
         });
@@ -101,25 +107,25 @@ public class GrafikpHActivity extends AppCompatActivity {
             public void onClick(View view) {
                 GrafikBulanan();
                 LCpHHarian.setVisibility(View.GONE);
-                LCpHMingguan.setVisibility(View.GONE);
+                LCpHTahunan.setVisibility(View.GONE);
                 LCpHBulanan.setVisibility(View.VISIBLE);
             }
         });
     }
 
-    public void GrafikMingguan() {
+    public void GrafikTahunan() {
         List yAxisValues = new ArrayList();
         List axisValues = new ArrayList();
 
 
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#055797"));
 
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        for (int i = 0; i < axisDataTahun.length; i++) {
+            axisValues.add(i, new AxisValue(i).setLabel(axisDataTahun[i]));
         }
 
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        for (int i = 0; i < yAxisDataTahun.length; i++) {
+            yAxisValues.add(new PointValue(i, yAxisDataTahun[i]));
         }
 
         List<Line> lines = new ArrayList<Line>();
@@ -131,7 +137,7 @@ public class GrafikpHActivity extends AppCompatActivity {
         Axis axis = new Axis();
         axis.setValues(axisValues);
         axis.setTextSize(16);
-        axis.setName("Dalam Mingguan");
+        axis.setName("Dalam Tahunan");
         axis.setTextColor(Color.parseColor("#00BCD4"));
         data.setAxisXBottom(axis);
 
@@ -141,11 +147,11 @@ public class GrafikpHActivity extends AppCompatActivity {
         yAxis.setTextSize(16);
         data.setAxisYLeft(yAxis);
 
-        LCpHMingguan.setLineChartData(data);
-        Viewport viewport = new Viewport(LCpHMingguan.getMaximumViewport());
-        viewport.top = 20;
-        LCpHMingguan.setMaximumViewport(viewport);
-        LCpHMingguan.setCurrentViewport(viewport);
+        LCpHTahunan.setLineChartData(data);
+        Viewport viewport = new Viewport(LCpHTahunan.getMaximumViewport());
+        viewport.top = 15;
+        LCpHTahunan.setMaximumViewport(viewport);
+        LCpHTahunan.setCurrentViewport(viewport);
     }
 
     public void GrafikBulanan() {
@@ -155,12 +161,12 @@ public class GrafikpHActivity extends AppCompatActivity {
 
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#055797"));
 
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        for (int i = 0; i < axisDataBulan.length; i++) {
+            axisValues.add(i, new AxisValue(i).setLabel(axisDataBulan[i]));
         }
 
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        for (int i = 0; i < yAxisDataBulan.length; i++) {
+            yAxisValues.add(new PointValue(i, yAxisDataBulan[i]));
         }
 
         List<Line> lines = new ArrayList<Line>();
@@ -184,7 +190,7 @@ public class GrafikpHActivity extends AppCompatActivity {
 
         LCpHBulanan.setLineChartData(data);
         Viewport viewport = new Viewport(LCpHBulanan.getMaximumViewport());
-        viewport.top = 20;
+        viewport.top = 15;
         LCpHBulanan.setMaximumViewport(viewport);
         LCpHBulanan.setCurrentViewport(viewport);
     }

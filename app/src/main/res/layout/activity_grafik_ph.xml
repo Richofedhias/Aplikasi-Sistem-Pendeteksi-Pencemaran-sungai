@@ -40,16 +40,6 @@
             android:textColor="#fff" />
 
         <Button
-            android:id="@+id/btn_pHMingguan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="@drawable/bg_penanggulangan"
-            android:text="Minggu"
-            android:textColor="#fff" />
-
-        <Button
             android:id="@+id/btn_pHBulanan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,6 +47,16 @@
             android:layout_margin="8dp"
             android:background="@drawable/bg_penanggulangan"
             android:text="Bulan"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btn_pHTahun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_penanggulangan"
+            android:text="Tahun"
             android:textColor="#fff" />
 
     </LinearLayout>
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <lecho.lib.hellocharts.view.LineChartView
-        android:id="@+id/LC_pHMingguan"
+        android:id="@+id/LC_pHBulanan"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <lecho.lib.hellocharts.view.LineChartView
-        android:id="@+id/LC_pHBulanan"
+        android:id="@+id/LC_pHTahun"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"

@@ -54,9 +54,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.myViewho
         } else if ((Suhu <= 32 && Suhu >= 25.01) && (pHH <= 8 && pHH >= 5.01) && (keruh <= 1000 && keruh >= 500.01)){
             holder.index.setText("Hati-hati");
             holder.layout.setBackgroundResource(R.drawable.bg_hampir_tercemar);
-        } else
-//            if ((Suhu >= 35.01) && (pHH >= 10.01) && (keruh >= 1000.01))
-            {
+        } else {
             holder.index.setText("Tercemar");
             holder.layout.setBackgroundResource(R.drawable.bg_tercemar);
         }

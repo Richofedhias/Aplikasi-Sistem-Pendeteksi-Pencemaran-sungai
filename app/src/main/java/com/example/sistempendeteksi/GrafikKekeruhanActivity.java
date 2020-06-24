@@ -20,11 +20,17 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class GrafikKekeruhanActivity extends AppCompatActivity {
 
-    private LineChartView LCKeruhHarian, LCKeruhMingguan, LCKeruhBulanan;
+    private LineChartView LCKeruhHarian, LCKeruhTahunan, LCKeruhBulanan;
     private LineChartData data;
-    private Button Harian, Mingguan, Bulanan;
-    String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
-    int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+    private Button Harian, Tahunan, Bulanan;
+    String[] axisDataBulan = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
+    int[] yAxisDataBulan = {535, 205, 34, 709, 1000, 2569, 366, 897, 452, 111, 90, 25};
+
+    String[] axisDataHari = {"Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"};
+    int[] yAxisDataHari = {1000, 2569, 30, 709, 897, 535, 452};
+
+    String[] axisDataTahun = {"2015", "2016", "2017", "2018", "2019", "2020"};
+    int[] yAxisDataTahun = {709, 90, 40, 111, 205, 2569};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +38,19 @@ public class GrafikKekeruhanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grafik_kekeruhan);
 
         LCKeruhHarian = findViewById(R.id.LC_kekeruhanHarian);
-        LCKeruhMingguan = findViewById(R.id.LC_kekeruhanMingguan);
+        LCKeruhTahunan = findViewById(R.id.LC_kekeruhanTahun);
         LCKeruhBulanan = findViewById(R.id.LC_kekeruhanBulanan);
         List yAxisValues = new ArrayList();
         List axisValues = new ArrayList();
 
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#055797"));
 
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        for (int i = 0; i < axisDataHari.length; i++) {
+            axisValues.add(i, new AxisValue(i).setLabel(axisDataHari[i]));
         }
 
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        for (int i = 0; i < yAxisDataHari.length; i++) {
+            yAxisValues.add(new PointValue(i, yAxisDataHari[i]));
         }
 
         List<Line> lines = new ArrayList<Line>();
@@ -68,28 +74,18 @@ public class GrafikKekeruhanActivity extends AppCompatActivity {
 
         LCKeruhHarian.setLineChartData(data);
         Viewport viewport = new Viewport(LCKeruhHarian.getMaximumViewport());
-        viewport.top = 1000;
+        viewport.top = 3000;
         LCKeruhHarian.setMaximumViewport(viewport);
         LCKeruhHarian.setCurrentViewport(viewport);
         Harian = findViewById(R.id.btn_KekeruhanHarian);
-        Mingguan = findViewById(R.id.btn_KekeruhanMingguan);
+        Tahunan = findViewById(R.id.btn_KekeruhanTahun);
         Bulanan = findViewById(R.id.btn_KekeruhanBulanan);
 
         Harian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LCKeruhHarian.setVisibility(View.VISIBLE);
-                LCKeruhMingguan.setVisibility(View.GONE);
-                LCKeruhBulanan.setVisibility(View.GONE);
-            }
-        });
-
-        Mingguan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GrafikMingguan();
-                LCKeruhHarian.setVisibility(View.GONE);
-                LCKeruhMingguan.setVisibility(View.VISIBLE);
+                LCKeruhTahunan.setVisibility(View.GONE);
                 LCKeruhBulanan.setVisibility(View.GONE);
             }
         });
@@ -99,24 +95,34 @@ public class GrafikKekeruhanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 GrafikBulanan();
                 LCKeruhHarian.setVisibility(View.GONE);
-                LCKeruhMingguan.setVisibility(View.GONE);
+                LCKeruhTahunan.setVisibility(View.GONE);
                 LCKeruhBulanan.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Tahunan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GrafikTahunan();
+                LCKeruhHarian.setVisibility(View.GONE);
+                LCKeruhTahunan.setVisibility(View.VISIBLE);
+                LCKeruhBulanan.setVisibility(View.GONE);
             }
         });
     }
 
-    public void GrafikMingguan() {
+    public void GrafikTahunan() {
         List yAxisValues = new ArrayList();
         List axisValues = new ArrayList();
 
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#055797"));
 
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        for (int i = 0; i < axisDataTahun.length; i++) {
+            axisValues.add(i, new AxisValue(i).setLabel(axisDataTahun[i]));
         }
 
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        for (int i = 0; i < yAxisDataTahun.length; i++) {
+            yAxisValues.add(new PointValue(i, yAxisDataTahun[i]));
         }
 
         List<Line> lines = new ArrayList<Line>();
@@ -128,7 +134,7 @@ public class GrafikKekeruhanActivity extends AppCompatActivity {
         Axis axis = new Axis();
         axis.setValues(axisValues);
         axis.setTextSize(16);
-        axis.setName("Dalam Mingguan");
+        axis.setName("Dalam Tahunan");
         axis.setTextColor(Color.parseColor("#00BCD4"));
         data.setAxisXBottom(axis);
 
@@ -138,11 +144,11 @@ public class GrafikKekeruhanActivity extends AppCompatActivity {
         yAxis.setTextSize(16);
         data.setAxisYLeft(yAxis);
 
-        LCKeruhMingguan.setLineChartData(data);
-        Viewport viewport = new Viewport(LCKeruhMingguan.getMaximumViewport());
-        viewport.top = 1000;
-        LCKeruhMingguan.setMaximumViewport(viewport);
-        LCKeruhMingguan.setCurrentViewport(viewport);
+        LCKeruhTahunan.setLineChartData(data);
+        Viewport viewport = new Viewport(LCKeruhTahunan.getMaximumViewport());
+        viewport.top = 3000;
+        LCKeruhTahunan.setMaximumViewport(viewport);
+        LCKeruhTahunan.setCurrentViewport(viewport);
     }
 
     public void GrafikBulanan() {
@@ -151,12 +157,12 @@ public class GrafikKekeruhanActivity extends AppCompatActivity {
 
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#055797"));
 
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        for (int i = 0; i < axisDataBulan.length; i++) {
+            axisValues.add(i, new AxisValue(i).setLabel(axisDataBulan[i]));
         }
 
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        for (int i = 0; i < yAxisDataBulan.length; i++) {
+            yAxisValues.add(new PointValue(i, yAxisDataBulan[i]));
         }
 
         List<Line> lines = new ArrayList<Line>();
@@ -180,7 +186,7 @@ public class GrafikKekeruhanActivity extends AppCompatActivity {
 
         LCKeruhBulanan.setLineChartData(data);
         Viewport viewport = new Viewport(LCKeruhBulanan.getMaximumViewport());
-        viewport.top = 1000;
+        viewport.top = 3000;
         LCKeruhBulanan.setMaximumViewport(viewport);
         LCKeruhBulanan.setCurrentViewport(viewport);
     }
